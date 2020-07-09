@@ -3753,7 +3753,7 @@ var app = new Vue({
 			if (!this.isTouch) {
 				// 正常  89 - 0 -  -89
 				// let isok = true
-				var leftData = Math.ceil(event.alpha || 0); // alpha
+				var leftData = Math.ceil(event.gamma || 0); // alpha  //gamma
 				var topData = Math.ceil(event.beta || 0);
 				this.beta = topData;
 				this.gamma = leftData;
