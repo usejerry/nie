@@ -3814,9 +3814,7 @@ var app = new Vue({
 						}
 					}
 				} else {
-					if (leftData > -70 && leftData < 70) {
-						this.egammaData = -leftData * this.span_w;
-					} else {}
+					this.egammaData = -leftData * this.span_w;
 					this.ebetaData = -topData * this.span_h + 90;
 				}
 
