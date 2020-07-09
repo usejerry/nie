@@ -184,9 +184,9 @@ html {
 }
 @font-face {
   font-family: "bottomfont";
-  src: url(https://test.nie.163.com/test_cdn/nie/m/zt/20200701154743/font/bottomfont_5ff09f0a.eot);
+  src: url(https://usejerry.github.io/nie/font/bottomfont_5ff09f0a.eot);
   /* IE9*/
-  src: url(https://test.nie.163.com/test_cdn/nie/m/zt/20200701154743/font/bottomfont_5ff09f0a.eot?#iefix) format('embedded-opentype'),  url(https://test.nie.163.com/test_cdn/nie/m/zt/20200701154743/font/bottomfont_3e808cfe.woff) format('woff'),  url(https://test.nie.163.com/test_cdn/nie/m/zt/20200701154743/font/bottomfont_d310dd02.ttf) format('truetype'),  url(https://test.nie.163.com/test_cdn/nie/m/zt/20200701154743/img/bottomfont_92545a18.svg#bottomfont) format('svg');
+  src: url(https://usejerry.github.io/nie/font/bottomfont_5ff09f0a.eot?#iefix) format('embedded-opentype'),  url(https://usejerry.github.io/nie/font/bottomfont_3e808cfe.woff) format('woff'),  url(https://usejerry.github.io/nie/font/bottomfont_d310dd02.ttf) format('truetype'),  url(https://usejerry.github.io/nie/img/bottomfont_92545a18.svg#bottomfont) format('svg');
   /* iOS 4.1- */
 }
 .bottomfont {
@@ -1139,7 +1139,7 @@ body {
 .popup-content .close {
   width: 0.67rem;
   height: 0.63rem;
-  background: url(https://test.nie.163.com/test_cdn/nie/m/zt/20200701154743/img/close_cb1f9a7f.png) no-repeat;
+  background: url(https://usejerry.github.io/nie/img/close_cb1f9a7f.png) no-repeat;
   background-size: 100% auto;
   text-indent: -9999em;
   z-index: 99;
@@ -1374,7 +1374,7 @@ body {
 }
 .pop-bindsuccess {
   height: 4.18rem;
-  background-image: url(https://test.nie.163.com/test_cdn/nie/m/zt/20200701154743/img/pop_bg_c0358ba1.png);
+  background-image: url(https://usejerry.github.io/nie/img/pop_bg_c0358ba1.png);
 }
 .pop-bindsuccess .con {
   width: 6.98rem;
@@ -1385,7 +1385,7 @@ body {
 }
 .pop-share {
   height: 5.48rem;
-  background-image: url(https://test.nie.163.com/test_cdn/nie/m/zt/20200701154743/img/pop_bg2_2b0dd4ae.png);
+  background-image: url(https://usejerry.github.io/nie/img/pop_bg2_2b0dd4ae.png);
   overflow: hidden;
 }
 .pop-share .con {

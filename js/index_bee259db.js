@@ -77,7 +77,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "https://test.nie.163.com/test_cdn/nie/m/zt/20200701154743/";
+/******/ 	__webpack_require__.p = "https://usejerry.github.io/nie/";
 /******/
 /******/
 /******/ 	// Load entry module and return exports
@@ -3250,7 +3250,7 @@ var stringify_default = /*#__PURE__*/__webpack_require__.n(stringify);
         return "";
     },
     hostUrl: function hostUrl() {
-        return "https://test.nie.163.com/test_cdn/nie/m/zt/20200701154743/";
+        return "https://usejerry.github.io/nie/";
     },
     openTips: function openTips(msg) {
         var $pop = $(".pop-tips").parents(".popup");
@@ -3396,7 +3396,7 @@ __webpack_require__(43);
 
 Vue.prototype.$Api = js_api;
 Vue.prototype.$Utils = js_common;
-Vue.prototype.resPath = "https://test.nie.163.com/test_cdn/nie/m/zt/20200701154743/";
+Vue.prototype.resPath = "https://usejerry.github.io/nie/";
 
 Vue.component('popup', popup);
 
