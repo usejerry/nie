@@ -3708,8 +3708,8 @@ var app = new Vue({
 			this.$nextTick(function () {
 				_this2.bg_box.h = _this2.$refs.gametarget.offsetHeight;
 				_this2.bg_box.w = _this2.$refs.gametarget.offsetWidth;
-				_this2.span_w = (_this2.bg_box.w / 2 - 62.5 - 40) / 90;
-				_this2.span_h = (_this2.bg_box.h / 2 - 62.5 - 40) / 90;
+				_this2.span_w = (_this2.bg_box.w / 2 - 62.5 - 40) / 20;
+				_this2.span_h = (_this2.bg_box.h / 2 - 62.5 - 40) / 50;
 				_this2.aimData.coreX = _this2.bg_box.w / 2;
 				_this2.aimData.coreY = _this2.bg_box.h / 2;
 
