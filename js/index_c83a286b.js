@@ -3748,88 +3748,83 @@ var app = new Vue({
 			}
 		},
 		onDeviceOrientationChangeEvent: function onDeviceOrientationChangeEvent(event) {
-      // console.log(event)
-			if (!this.isTouch) {
-				// 正常  89 - 0 -  -89
+			// console.log(event)
+			if (!this.isTouch) {                                                                                     // 正常  89 - 0 -  -89
 				// let isok = true
-				var leftData = Math.ceil(event.gamma || 0); // alpha  //gamma
-				var topData = Math.ceil(event.beta || 0);
-				this.beta = topData;
-				this.gamma = leftData;
+				let leftData = Math.ceil((event.gamma||0))   // alpha  //gamma
+				let topData = Math.ceil((event.beta||0))
+				this.beta = topData
+				this.gamma = leftData
 
 				/* 没有边界值
-    if (leftData > -90 && leftData < 90 ) {
-    	this.egammaData = -leftData * this.span_w
-    	this.ebetaData = -topData * this.span_h
-     }
-     */
-				if (Math.abs(leftData - this.start_ealpha) > 50) {
-					// console.log(leftData , this.start_ealpha)
-					this.isOk = false;
-					console.log('false', leftData);
-					this.jlu = this.start_ealpha; // 边界值的前数据
-				}
-				if (!this.isOk) {
-					if (this.jlu > 88 && this.jlu > 0) {
-						// 左边开始翻
-						if (leftData - this.start_ealpha > 0) {
-							// 左顺时针 
+				if (leftData > -90 && leftData < 90 ) {
+					this.egammaData = -leftData * this.span_w
+					this.ebetaData = -topData * this.span_h
+				 }
+				 */
 
+                if(Math.abs(leftData - this.start_ealpha) > 50 ){
+					// console.log(leftData , this.start_ealpha)
+					this.isOk = false
+					console.log('false', leftData)
+					this.jlu = this.start_ealpha  // 边界值的前数据
+
+				}
+				if(!this.isOk){
+					if(this.jlu > 88 && this.jlu > 0){  // 左边开始翻
+						if(leftData - this.start_ealpha > 0 ){   // 左顺时针 
+							
 							this.egammaData = -(90*this.span_w - (90 + leftData)*this.span_w)
-							console.log("左顺时针");
-							if (leftData == 0) {
-								console.log("左0");
-								this.isOk = true;
+							console.log("左顺时针")
+							if(leftData == 0) {
+								console.log("左0")
+								this.isOk = true
 							}
-						} else if (leftData - this.start_ealpha < 0) {
-							// 左逆时针
+						}else if(leftData - this.start_ealpha < 0 ){                                   // 左逆时针
 							this.egammaData = leftData*this.span_w
-							console.log("左逆时针");
+							console.log("左逆时针")
 							// if(leftData == -89){
 							// 	console.log("左-89")
 							// 	this.isOk = true
 							// }
 						}
-					} else if (this.jlu > -90 && this.jlu < 0) {
-						// 右边开始翻
+					}else if(this.jlu > -90 && this.jlu < 0){  // 右边开始翻
 
-						if (leftData - this.start_ealpha < 0) {
-							// 右逆时针
-							console.log("右逆时针");
+						if(leftData - this.start_ealpha < 0 ){   // 右逆时针
+							console.log("右逆时针")
 							this.egammaData = -(90*this.span_w - (90 + leftData)*this.span_w)
-							if (leftData == 0) {
-								console.log("右0");
-								this.isOk = true;
+							if(leftData == 0) {
+								console.log("右0")
+								this.isOk = true
 							}
-						} else if (leftData - this.start_ealpha > 0) {
-							// 右顺时针
+						}else if(leftData - this.start_ealpha > 0 ){                                   // 右顺时针
 							this.egammaData = leftData*this.span_w
-							console.log("右顺时针");
-							if (leftData == 89) {
-								console.log("右90");
-								this.isOk = true;
+							console.log("右顺时针")
+							if(leftData == 89){
+								console.log("右90")
+								this.isOk = true
 							}
 						}
 					}
-				} else {
-          if(leftData > -70 && leftData < 70 && leftData%2 == 0 && topData %2 ==0 ){
-            this.egammaData = -leftData * this.span_w;
-            this.ebetaData = -topData * this.span_h + 90;
-          }
+				}else{
+					if(leftData > -70 && leftData < 70  ){
+						this.egammaData =Math.ceil( -leftData * this.span_w );
+						this.ebetaData =Math.ceil( -topData * this.span_h + 90 );
+					  }			
 				}
-
-				this.start_ealpha = leftData;
-				this.start_ebeta = topData;
-
-	
-        // 瞄准
-				var distanceX = this.target_core.x - (this.aimData.coreX + Math.ceil(this.egammaData)),
-				    distanceY = this.target_core.y - (this.aimData.coreY + Math.ceil(this.ebetaData));
-				if (distanceX < 10 && distanceY < 10) {
-					this.aimData.effect = true;
-				} else {
-					this.aimData.effect = false;
-				}
+			    
+				this.start_ealpha =leftData
+				this.start_ebeta = topData
+				console.log(this.egammaData, this.ebetaData)
+				// console.log('left',this.target_core.x - (this.aimData.coreX + Math.ceil(this.egammaData)), 'top',this.target_core.y - (this.aimData.coreY + Math.ceil(this.ebetaData)))
+				
+				let distanceX = this.target_core.x - (this.aimData.coreX + Math.ceil(this.egammaData)),
+					distanceY = this.target_core.y - (this.aimData.coreY + Math.ceil(this.ebetaData))
+					if(distanceX < 10 && distanceY < 10){
+						this.aimData.effect = true
+					}else {
+						this.aimData.effect = false
+					}
 				// if(this.target_core.x > this.aimData.coreX){
 				// 	console.log(this.target_core.x - )
 				// }
