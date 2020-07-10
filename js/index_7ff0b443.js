@@ -3445,7 +3445,9 @@ var app = new Vue({
 			beta: 0,
 			target_core: { x: 0, y: 0 },
 			count: '',
-			count_num: 59
+			count_num: 59,
+			toX: 0,
+			toY: 0
 		};
 	},
 	components: {},
@@ -3712,7 +3714,7 @@ var app = new Vue({
 
 				console.log(_this2.span_h, _this2.span_w);
 				_this2.randomTarget();
-
+				_this2.setTIME();
 				var endTime = new Date(new Date().getTime() + 60000); //下一分钟
 				var s = setInterval(function () {
 					var dates = _this.countDown(endTime);
@@ -3821,8 +3823,12 @@ var app = new Vue({
 				} else {
 					console.log(222);
 					if (topData > 0 && topData < 130 && leftData > -25 && leftData < 25) {
-						this.egammaData = parseInt(-leftData * this.span_w);
-						this.ebetaData = parseInt(-topData * this.span_h + 90);
+						this.toX = parseInt(-leftData * this.span_w);
+						this.toY = parseInt(-topData * this.span_h + 90);
+						// this.egammaData =parseInt( -leftData * this.span_w );
+						// this.ebetaData =parseInt( -topData * this.span_h +90 );
+						// togamma = ''
+						// nowgamma = nowgamma+(togamma-nowgamma)*0.1
 					}
 				}
 
@@ -3842,6 +3848,14 @@ var app = new Vue({
 				// 	console.log(this.target_core.x - )
 				// }
 			}
+		},
+		setTIME: function setTIME() {
+			var _this = this;
+			requestAnimationFrame(function () {
+				_this.egammaData = _this.egammaData + (_this.toX - _this.egammaData) * 0.1;
+				_this.ebetaData = _this.ebetaData + (_this.toY - _this.ebetaData) * 0.1;
+				_this.setTIME();
+			});
 		},
 
 		//射击
