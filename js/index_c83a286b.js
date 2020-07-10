@@ -3749,7 +3749,7 @@ var app = new Vue({
 		},
 		onDeviceOrientationChangeEvent: function onDeviceOrientationChangeEvent(event) {
       // console.log(event)
-      if (!this.isTouch) {                                                                                     // 正常  89 - 0 -  -89
+			if (!this.isTouch) {                                                                                     // 正常  89 - 0 -  -89
 				// let isok = true
 				let leftData = parseInt((event.gamma||0))   // alpha  //gamma
 				let topData = parseInt((event.beta||0))
@@ -3772,16 +3772,16 @@ var app = new Vue({
 						leftData = leftData + 180 - ((90+leftData)*2)  // 91  92 93
 					}else if(leftData <= 90 && leftData > 0){// 89  88 87 
 						leftData = leftData - 180 + ((90-leftData)*2)             
-					}else if(leftData == 0){                    
+					}else if(leftData == 0 || leftData == 30 || leftData == -30){                    
 						this.isOk = true
 						console.log("ok") 
 					}
-					if(topData > 0 && topData < 130  ){
-						// this.egammaData =parseInt( -leftData * this.span_w );
-						this.egammaData =parseInt( -leftData);
+					// if(topData > 0 && topData < 130  ){
+					// 	// this.egammaData =parseInt( -leftData * this.span_w );
+					// 	this.egammaData =parseInt( -leftData);
 
-						this.ebetaData =parseInt( -topData * this.span_h +90 );
-					}	
+					// 	this.ebetaData =parseInt( -topData * this.span_h + 50 );
+					// }	
                     //7.10 end 
 					
 					// if(this.jlu > 88 && this.jlu > 0){  // 左边开始翻
@@ -3821,13 +3821,7 @@ var app = new Vue({
 					// }
 				}else{
 					console.log(222)
-					// if(Math.abs(leftData - this.start_ealpha) > 50 ){
-					// 	// console.log(leftData , this.start_ealpha)
-					// 	this.isOk = false
-					// 	console.log('false', leftData)
-					// 	this.jlu = this.start_ealpha  // 边界值的前数据
-					// }
-					if(topData > 0 && topData < 130  ){
+					if(topData > 0 && topData < 130 &&  leftData > -25 && leftData < 25 ){
 						this.egammaData =parseInt( -leftData * this.span_w );
 						this.ebetaData =parseInt( -topData * this.span_h +90 );
 					}			
