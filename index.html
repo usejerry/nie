@@ -1,193 +1,199 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html>
 
 <head>
+    <title>タイムスリップ-無料でガチャを引き直し</title>
+    <!-- <meta name="keywords" content="荒野行動，荒野，NetEase荒野，NetEaseゲーム，チーム戦スマホゲーム，荒野行動PC，荒野チーム戦，荒野PC版，戦術競技スマホゲーム，新マップ，高解像度新バージョン，激戦野原，東京マップ，起動，マッチング，プレイ，ゲーム，抽選，宝箱，仲間，報酬，大賞，好運" /> -->
+    <!-- <meta name="description" content="荒野宝箱を開け、豊富な報酬を貰いましょう！" /> -->
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="renderer" content="webkit">
+    <meta name="author" content="网易，NetEase Inc." />
+    <meta name="copyright" content="网易，NetEase Inc." />
+    <meta name="pmid" content="" />
+    <meta name="designer" content="" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="format-detection" content="address=no" />
+    <!--for baidu 识别移动端页面并禁止百度转码-->
+    <meta name="applicable-device"content="mobile"> 
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--viewport 设置，如果页面实际情况不允许缩放请加上,user-scalable=no-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="dns-prefetch" href="http://res.nie.netease.com">
 
-  <meta charset="UTF-8">
+    <script type="text/javascript">
+      !function(){
+        function params(u, p){
+          var m = new RegExp("(?:&|/?)"+p+"=([^&$]+)").exec(u);
+          return m ? m[1] : '';
+        }
+        var ua = navigator.userAgent;
+        var isSafari = ua.indexOf("Safari") != -1 && ua.indexOf("Version") != -1;
+        var isIphone = ua.indexOf("iPhone") != -1 && ua.indexOf("Version") != -1
+        var isIPad = isSafari && !isIphone && 'ontouchend' in document; //判断IPad
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        //pc 跳转 
+        if(/iphone|android|ipad|ipod/i.test(navigator.userAgent.toLowerCase()) == false && params(location.search, "from") != "desktop" && !isIPad){
 
-  <title>Document</title>
+            if(params(location.search,"page_key")){
+                // location.href = 'https://www.knivesout.jp/pc/hyxd_junxu/?page_key='+params(location.search,"page_key");
+            }else{
+                // location.href = 'https://www.knivesout.jp/pc/hyxd_junxu/';
+            }
+        }
+      }();
 
-  <style>
+    </script><!--ignore-->
 
-    #box{
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-171107899-1"></script>
 
-      position: relative;
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      width: 300px;
+    gtag('config', 'UA-171107899-1');
+</script>
 
-      margin: 0 auto;
 
-    }
-
-    #face{
-
-      /* background-image: url(images/face.png); */
-      
-      background-size: cover;
-background-color: red;
-      width: 300px;
-
-      height: 300px;
-
-      position: absolute;
-
-    }
-
-    #eyeLeft{
-
-      /* background-image: url(images/eye.png); */
-background-color: rosybrown;
-      background-size: cover;
-
-      width: 40px;
-
-      height: 40px;
-
-      position: absolute;
-
-      top: 90px;
-
-      left: 100px;
-
-    }
-
-    #eyeRight{
-
-      /* background-image: url(images/eye.png); */
-background-color: sandybrown;
-      background-size: cover;
-
-      width: 40px;
-
-      height: 40px;
-
-      position: absolute;
-
-      top: 90px;
-
-      left: 190px;
-
-    }
-
-    #glass{
-
-      /* background-image: url(images/glass.png); */
-      /* background-color: skyblue; */
-      background-size: cover;
-
-      width: 300px;
-
-      height: 300px;
-
-      position: absolute;
-
-    }
-
-  </style>
-
-</head>
+<link href="https://usejerry.github.io/nie/css/index_f7645683.css" rel="stylesheet"></head>
 
 <body>
 
-  <p id="box">
+    <!-- <div id="forhorview">
+        <p>推荐使用竖屏浏览哦~</p> 
+    </div> -->
+    
+    <div class="wrap" id="app">
+        <!--开场动画-->
+        <template v-if="start_show">
+            <div class="start_animation">
+                <div class="battle_btn" @click="goHome">迎击使徒</div>
+            </div>
+        </template>
+        <!--奖品展示-->
+        <template v-if="!start_show&&page_state=='home'">
+            <div class="main_box">
+                --奖品展示--
+                <input type="button" value="开始战斗" @click="goBattle">
+            </div>
+        </template>
+        <template v-if="!start_show&&page_state=='game'">
+            <div class="game_box">
+                游戏界面
+                <p>ebetaData : {{beta}}</p>
+                <p>egammaData : {{gamma}}</p>
+                <!-- <p>00:{{count_num < 10 ? ('0' + count_num) : count_num}}: 00</p> -->
+                <p>{{count==''? '01:00:00':count}}</p>
+                <div class="blood_stick">
+                <p :style="{'width': monsterData.blood/10000*100+'%'}"></p>
+                </div>
+                <div class="game_main">
+                    <div class="gametarget_bg_box" ref="gametarget">
+                        <img src="https://usejerry.github.io/nie/img/boom_bg_16d3aec5.jpg" alt="" class="gametarget_bg">
+                        <div class="target" :class="{'target_move':aimData.effect}" ref="target1"></div>
+                    </div>
+                    <div class="aim_box">
+                        <!-- <img src="./img/boom.jpg" alt="" class="aim" ref="aim" :style="{'left': egammaData + 'px', 'top': ebetaData + 'px'}"> -->
+                        <img src="https://usejerry.github.io/nie/img/boom_5952aaf8.jpg" alt="" class="aim" ref="aim" :style="{'transform': 'translateX(' + egammaData + 'px)'+'translateY(' + ebetaData + 'px)'}">
+                    </div>
+                </div>
+                <input type="button" value="射击" class="shooting" @click="shooting" >
+            </div>
+        </template>
+        <!--弹层-->
+        <!--弹层-->
+<!--规则弹层-->
+<popup ref="popRule">
+    <div class="pop-rule pop-con">
+        <div class="tit"><i></i>イベントルール<i class="r"></i></div>
+        <div class="con">
+            <p class="time">イベント期間：</p>
+            <p>1、本活动需开启手机陀螺仪功能，iOS12.2-iOS13.0这个版本的手机需要手工进入系统设置里面打开陀螺仪配置才可以使用陀螺仪，iOS13.0以上需要点击触发授权，iOS12用户请自行升级；</p>
+            <p>2、击退使徒时间有限，玩家必须在限定时间内攻击使徒核心，血条耗光则判定胜利；</p>
+            <p>3、在结束小游戏体验后对结果进行分享，即可获得XXXX礼包；</p>
+            <p>4、礼包将通过游戏邮箱进行发放，请玩家正确填写个人UID，如需指引，请在游戏主界面左上角点击个人头像——左下角个人资料框点击右上角工具键——当前账号个人id（可直接复制）。</p>
+        </div>
+    </div>
+</popup>
 
-    <p id="face"></p>
+<!--绑定角色弹层-->
+<popup ref="popBind">
+    <div class="pop-bind pop-con">
+        <div class="tit"><i></i>キャラと連携する<i class="r"></i></div>
+        <div class="con">
+            <ul>
+                <li>
+                    <select v-model="serverId">
+                        <option value="" data-name="">サーバーを選択する:</option>
+                        <option value="10001" data-name="荒野行動（Global）">荒野行動（Global）</option>
+                        <option value="10005" data-name="荒野行動-PC版">荒野行動-PC版</option>
+                        <option value="10007" data-name="荒野行動（JP）">荒野行動（JP）</option>
+                        <option value="10010" data-name="PCサーバー-東南アジア">PCサーバー-東南アジア</option>
+                        <option value="10011" data-name="PCサーバー-北米">PCサーバー-北米</option>
+                        <option value="10012" data-name="PCサーバー-日本">PCサーバー-日本</option>
+                    </select>
+                </li>
+                <li>
+                    <input v-model.trim="roleId" maxlength="255" placeholder="キャラクターIDを入力する" />
+                </li>
+            </ul>
+            <p class="tip"><a href="javascript:void(0);">キャラIDの確認方法</a></p>
+            <div class="btns">
+                <!--下一步-->
+                <a :class="serverId!='' && roleId!=''? 'next-btn-ok' : 'next-btn'"  href="javascript:void(0);" title="次へ"></a>
+            </div>
+            <p class="error-msg">{{errorMsg}}</p>
+        </div>
+    </div>
+</popup>
 
-    <p id="eyeLeft"></p>
 
-    <p id="eyeRight"></p>
 
-    <p id="glass"></p>
+<!--如何找到角色弹层-->
+<popup ref="popHow">
+    <div class="pop-role pop-con">
+        <div class="tit"><i></i><p>キャラクターIDはど<br/>こで確認できますか？</p><i class="r"></i></div>
+        <div class="con">
+            <p>ゲーム画面で左上の個人アイコンを押す⇒左下のプロフィール欄の設定ボタンを押す⇒該当アカウントの個人ID（コピー可能）</p>
+        </div>
+    </div>
+</popup>
 
-    <p id="log"></p>
+<!--分享成功弹层-->
+<popup ref="popshare">
+    <div class="pop-share pop-con">
+        <div class="tit"><i></i>共有完了<i class="r"></i></div>
+        <div class="con">
+            <p>報酬<font>を獲得しました！</font></p>
+            <div class="prize">
+                <div class="icon">
+                    <img :src="resPath+'data/prize/p8.png'" alt="獎勵" />
+                </div>
+                <span class="name">鑽石</span>
+            </div>
+            <p>SNSアプリで共有リンクにアクセスすれば、<br/>引き続き福袋が開けますよ！</p>
+        </div>
+    </div>
+</popup>
 
-  </p>
+<!--提示弹层-->
+<popup ref="popTips">
+    <div class="pop-tips pop-con">
+        <p class="msg"></p>
+    </div>
+</popup>
 
-<script>
-
-'use strict';
-
-/*
-
-* author: 王乐平
-
-* date:2017.7.17
-
-*/
-
-var eyeLeftPosition = {
-
-  start: [70, 78],
-
-  end: [100, 110]
-
-};
-
-var eyeRightPosition = {
-
-  start: [150, 78],
-
-  end: [190, 110]
-
-};
-
-var eyeLeftCenterPosition = {
-
-  x: (eyeLeftPosition.end[0] - eyeLeftPosition.start[0]) / 2 + eyeLeftPosition.start[0],
-
-  y: (eyeLeftPosition.end[1] - eyeLeftPosition.start[1]) / 2 + eyeLeftPosition.start[1]
-
-};
-
-var eyeRightCenterPosition = {
-
-  x: (eyeRightPosition.end[0] - eyeRightPosition.start[0]) / 2 + eyeRightPosition.start[0],
-
-  y: (eyeRightPosition.end[1] - eyeRightPosition.start[1]) / 2 + eyeRightPosition.start[1]
-
-};
-
-var r = 20;
-
-var eyeLeft = document.querySelector('#eyeLeft');
-
-var eyeRight = document.querySelector('#eyeRight');
-
-if (window.DeviceOrientationEvent) {
-
-  window.addEventListener('deviceorientation', function (event) {
-
-    let {alpha, beta, gamma} = event;
-
-    eyeLeft.style.left = eyeLeftCenterPosition.x + alpha / 90 * r + 'px';
-
-    eyeRight.style.left = eyeRightCenterPosition.x + alpha / 90 * r + 'px';
-
-    eyeLeft.style.top = eyeRight.style.top 
-
-                      = eyeLeftCenterPosition.y + beta / 180 * r + 'px';
-
-    eyeRight.style.transform = eyeLeft.style.transform 
-
-                         = eyeRight.style.WebkitTransform 
-
-                         = eyeLeft.style.WebkitTransform 
-
-                         = 'rotate(' + beta + 'deg)';
-
-  }, false);
-
-} else {
-
-  document.querySelector('body').innerHTML = '浏览器不支持DeviceOrientationEvent';
-
-}
-
-</script>
-
-</body>
+    </div>
+    
+    <!-- JS放底部-->
+    <script src="https://nie.res.netease.com/comm/js/zepto(mixNIE).last.js"></script>
+    <script src="https://nie.res.netease.com/comm/js/nie/ref/??vue.2.5.0.js,vuex.3.0.1.js,vue-router.3.0.1.js,axios.js,axios-jsonp.js"></script>
+    <script src="https://nie.res.netease.com/comm/js/nie/util/mshare/index.js"></script>  <!-- 国服 -->
+    <script src="https://nie.res.netease.com/comm/load/myLogin.js"></script>
+<script type="text/javascript" src="https://usejerry.github.io/nie/js/index_c83a286b.js"></script></body>
 
 </html>

@@ -3749,11 +3749,10 @@ var app = new Vue({
 		},
 		onDeviceOrientationChangeEvent: function onDeviceOrientationChangeEvent(event) {
       // console.log(event)
-      this.update(-Math.ceil(event.gamma || 0), -Math.ceil(event.beta || 0))
-			if (this.isTouch) {
+			if (!this.isTouch) {
 				// 正常  89 - 0 -  -89
 				// let isok = true
-				var leftData = Math.ceil(event.gamma || 0); // alpha  //gamma
+				var leftData = Math.ceil(event.alpha || 0); // alpha  //gamma
 				var topData = Math.ceil(event.beta || 0);
 				this.beta = topData;
 				this.gamma = leftData;
@@ -3813,15 +3812,17 @@ var app = new Vue({
 						}
 					}
 				} else {
-					this.egammaData = -leftData * this.span_w;
-					this.ebetaData = -topData * this.span_h + 90;
+          if(leftData > -70 && leftData < 70 && leftData%2 == 0 && topData %2 ==0 ){
+            this.egammaData = -leftData * this.span_w;
+            this.ebetaData = -topData * this.span_h + 90;
+          }
 				}
 
 				this.start_ealpha = leftData;
 				this.start_ebeta = topData;
 
-				console.log('left', this.target_core.x - (this.aimData.coreX + Math.ceil(this.egammaData)), 'top', this.target_core.y - (this.aimData.coreY + Math.ceil(this.ebetaData)));
-
+	
+        // 瞄准
 				var distanceX = this.target_core.x - (this.aimData.coreX + Math.ceil(this.egammaData)),
 				    distanceY = this.target_core.y - (this.aimData.coreY + Math.ceil(this.ebetaData));
 				if (distanceX < 10 && distanceY < 10) {
@@ -3841,7 +3842,6 @@ var app = new Vue({
 			if (this.aimData.effect) {
 				//瞄准了 伤害 30 - 60   
 				this.monsterData.blood -= 60; // 血量减少60
-				console.log(this.monsterData.blood);
 			}
 		},
 
@@ -3913,39 +3913,6 @@ var app = new Vue({
 			//   alert('松手')
 			// }
 			console.log('松手');
-		},
-		update: function update(h, v) {
-			var t, xh, xv;
-			var R = 100;
-			var ch = 0,
-			    cv = 0;
-			if (h > 90) {    
-				h = 180 - h;  
-			} else if (h < -90) {
-				h = -180 - h; // 
-			}
-			if (v > 90) {
-				v = 180 - v;
-			} else if (v < -90) {
-				v = -180 - v;
-			}
-			var r = Math.max(Math.abs(h), Math.abs(v)) / 90;
-			var range = Math.round(R * r);
-			if (h == 0) {
-				cv = range * v / 90;
-			} else if (v == 0) {
-				ch = range * h / 90;
-			} else {
-				var a = Math.atan2(v, h);
-				ch = range * Math.cos(a);
-				cv = range * Math.sin(a);
-			}
-			ch = Math.round(ch);
-			cv = Math.round(cv);
-
-			// t.style.webkitTransform = "translate(" + ch + "px," + cv + "px)";
-      this.egammaData = ch
-			this.ebetaData = cv	
 		},
 		countDown: function countDown(time) {
 			var date = new Date();
