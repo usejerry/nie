@@ -3751,7 +3751,7 @@ var app = new Vue({
       // console.log(event)
       if (!this.isTouch) {                                                                                     // 正常  89 - 0 -  -89
 				// let isok = true
-				let leftData = parseInt((event.alpha||0))   // alpha  //gamma
+				let leftData = parseInt((event.gamma||0))   // alpha  //gamma
 				let topData = parseInt((event.beta||0))
 				this.beta = topData
 				this.gamma = leftData
