@@ -3766,8 +3766,8 @@ var app = new Vue({
 					
 				}
 				if(!this.isOk){
-					if(this.jlu + leftData <= 1) {
-						console.log(111)
+					if(this.jlu + leftData <= 0) {
+						console.log(this.jlu, leftData)
 						this.isOk = true
 					}
 					// if(this.jlu > 88 && this.jlu > 0){  // 左边开始翻
