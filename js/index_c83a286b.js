@@ -3749,9 +3749,9 @@ var app = new Vue({
 		},
 		onDeviceOrientationChangeEvent: function onDeviceOrientationChangeEvent(event) {
       // console.log(event)
-			if (!this.isTouch) {                                                                                     // 正常  89 - 0 -  -89
+      if (!this.isTouch) {                                                                                     // 正常  89 - 0 -  -89
 				// let isok = true
-				let leftData = parseInt((event.gamma||0))   // alpha  //gamma
+				let leftData = parseInt((event.alpha||0))   // alpha  //gamma
 				let topData = parseInt((event.beta||0))
 				this.beta = topData
 				this.gamma = leftData
@@ -3759,46 +3759,29 @@ var app = new Vue({
                 if(Math.abs(leftData - this.start_ealpha) > 50 ){
 					// console.log(leftData , this.start_ealpha)
 					this.isOk = false
-					console.log('false', this.start_ealpha)
-					this.jlu = this.start_ealpha  // 边界值的前数据
+					// console.log('false', this.start_ealpha)
+					// this.jlu = this.start_ealpha  // 边界值的前数据
 					// 87 89 90 -89 -88  -87
 					//-87 -88 -89 90 89 87
 					
 				}
 				if(!this.isOk){
 					// 7.10 start
-
-					
-					if(this.jlu > 88 && this.jlu > 0){
-						console.log('ss',this.jlu, leftData)
-						if(this.jlu + leftData <= 0) { 
-							console.log('左' + this.jlu, leftData)
-							this.isOk = true
-						}else if(this.jlu + leftData > 0){
-							console.log("2ddd", this.jlu + leftData)
-							this.egammaData = parseInt( -leftData * this.span_w );
-							if(this.egammaData == 0){
-								this.isOk = true
-							}
-						}
-					}else if(this.jlu > -90 && this.jlu < 0){
-						   // -89  90
-						// if(this.jlu + leftData > 0) {
-						// 	console.log('右',this.jlu, leftData)
-						// 	this.isOk = true
-						// }
-						if(leftData - this.start_ealpha < 0 ){   // 右逆时针
-							// if(Math.abs(leftData - this.start_ealpha) > 50 ){
-							// 	this.isOk = true
-							// }
-
-						}else if(leftData - this.start_ealpha > 0 ){                                   // 右顺时针
-
-							console.log("右顺时针")
-
-						}
+					console.log(1111)
+			        if(leftData >= -89 && leftData < 0){      // 2    4    6
+						leftData = leftData + 180 - ((90+leftData)*2)  // 91  92 93
+					}else if(leftData <= 90 && leftData > 0){// 89  88 87 
+						leftData = leftData - 180 + ((90-leftData)*2)             
+					}else if(leftData == 0){                    
+						this.isOk = true
+						console.log("ok") 
 					}
-					
+					if(topData > 0 && topData < 130  ){
+						// this.egammaData =parseInt( -leftData * this.span_w );
+						this.egammaData =parseInt( -leftData);
+
+						this.ebetaData =parseInt( -topData * this.span_h +90 );
+					}	
                     //7.10 end 
 					
 					// if(this.jlu > 88 && this.jlu > 0){  // 左边开始翻
