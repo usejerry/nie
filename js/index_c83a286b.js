@@ -3919,10 +3919,10 @@ var app = new Vue({
 			var R = 100;
 			var ch = 0,
 			    cv = 0;
-			if (h > 90) {
-				h = 180 - h;
+			if (h > 90) {    
+				h = 180 - h;  
 			} else if (h < -90) {
-				h = -180 - h;
+				h = -180 - h; // 
 			}
 			if (v > 90) {
 				v = 180 - v;
