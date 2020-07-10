@@ -3748,62 +3748,71 @@ var app = new Vue({
 			}
 		},
 		onDeviceOrientationChangeEvent: function onDeviceOrientationChangeEvent(event) {
-			// console.log(event)
-			if (!this.isTouch) {                                                                                     // 正常  89 - 0 -  -89
+      // console.log(event)
+      if (!this.isTouch) {                                                                                     // 正常  89 - 0 -  -89
 				// let isok = true
-				let leftData = Math.ceil((event.gamma||0))   // alpha  //gamma
+				let leftData = Math.ceil((event.alpha||0))   // alpha  //gamma
 				let topData = Math.ceil((event.beta||0))
 				this.beta = topData
 				this.gamma = leftData
-
+ 
                 if(Math.abs(leftData - this.start_ealpha) > 50 ){
 					// console.log(leftData , this.start_ealpha)
 					this.isOk = false
 					console.log('false', leftData)
 					this.jlu = this.start_ealpha  // 边界值的前数据
-
+                    
 				}
 				if(!this.isOk){
-					if(this.jlu > 88 && this.jlu > 0){  // 左边开始翻
-						if(leftData - this.start_ealpha > 0 ){   // 左顺时针 
-							
-							this.egammaData = -(90*this.span_w - (90 + leftData)*this.span_w)
-							console.log("左顺时针")
-							if(leftData == 0) {
-								console.log("左0")
-								this.isOk = true
-							}
-						}else if(leftData - this.start_ealpha < 0 ){                                   // 左逆时针
-							this.egammaData = leftData*this.span_w
-							console.log("左逆时针")
-							// if(leftData == -89){
-							// 	console.log("左-89")
-							// 	this.isOk = true
-							// }
-						}
-					}else if(this.jlu > -90 && this.jlu < 0){  // 右边开始翻
-
-						if(leftData - this.start_ealpha < 0 ){   // 右逆时针
-							console.log("右逆时针")
-							this.egammaData = -(90*this.span_w - (90 + leftData)*this.span_w)
-							if(leftData == 0) {
-								console.log("右0")
-								this.isOk = true
-							}
-						}else if(leftData - this.start_ealpha > 0 ){                                   // 右顺时针
-							this.egammaData = leftData*this.span_w
-							console.log("右顺时针")
-							if(leftData == 89){
-								console.log("右90")
-								this.isOk = true
-							}
-						}
+					if(Math.abs(leftData - this.start_ealpha) > 50 ){
+						this.isOk = true
 					}
+					// if(this.jlu > 88 && this.jlu > 0){  // 左边开始翻
+					// 	if(leftData - this.start_ealpha > 0 ){   // 左顺时针 
+							
+					// 		this.egammaData = -(90*this.span_w - (90 + leftData)*this.span_w)
+					// 		console.log("左顺时针")
+					// 		if(leftData == 0) {
+					// 			console.log("左0")
+					// 			this.isOk = true
+					// 		}
+					// 	}else if(leftData - this.start_ealpha < 0 ){                                   // 左逆时针
+					// 		this.egammaData = leftData*this.span_w
+					// 		console.log("左逆时针")
+					// 		// if(leftData == -89){
+					// 		// 	console.log("左-89")
+					// 		// 	this.isOk = true
+					// 		// }
+					// 	}
+					// }else if(this.jlu > -90 && this.jlu < 0){  // 右边开始翻
+
+					// 	if(leftData - this.start_ealpha < 0 ){   // 右逆时针
+					// 		console.log("右逆时针")
+					// 		this.egammaData = -(90*this.span_w - (90 + leftData)*this.span_w)
+					// 		if(leftData == 0) {
+					// 			console.log("右0")
+					// 			this.isOk = true
+					// 		}
+					// 	}else if(leftData - this.start_ealpha > 0 ){                                   // 右顺时针
+					// 		this.egammaData = leftData*this.span_w
+					// 		console.log("右顺时针")
+					// 		if(leftData == 89){
+					// 			console.log("右90")
+					// 			this.isOk = true
+					// 		}
+					// 	}
+					// }
 				}else{
-					if(topData > 0 && topData < 130  ){
-						this.egammaData =Math.ceil( -leftData * this.span_w );
-						this.ebetaData =Math.ceil( -topData * this.span_h +90 );
-					  }			
+					if(Math.abs(leftData - this.start_ealpha) > 50 ){
+						// console.log(leftData , this.start_ealpha)
+						this.isOk = false
+						console.log('false', leftData)
+						this.jlu = this.start_ealpha  // 边界值的前数据
+						if(topData > 0 && topData < 130  ){
+							this.egammaData =Math.ceil( -leftData * this.span_w );
+							this.ebetaData =Math.ceil( -topData * this.span_h +90 );
+						}	
+					}		
 				}
 			    
 				this.start_ealpha =leftData
