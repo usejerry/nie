@@ -3412,10 +3412,7 @@ var app = new Vue({
 			request_ok: true,
 			nickName: '', //游戏昵称，地址上携带
 			isLogin: false, //已授权登录
-			isLottery: false,
 			noPagePkey: false,
-			checkClick: true,
-			record: [], //分享者被开福袋记录
 			serverId: '', //选择的服务器id
 			serverName: '', //选择的服务器名称
 			roleId: '', //输入的角色ID
@@ -3748,33 +3745,35 @@ var app = new Vue({
 			}
 		},
 		onDeviceOrientationChangeEvent: function onDeviceOrientationChangeEvent(event) {
-      // console.log(event)
-			if (!this.isTouch) {                                                                                     // 正常  89 - 0 -  -89
+			// console.log(event)
+			if (!this.isTouch) {
+				// 正常  89 - 0 -  -89
 				// let isok = true
-				let leftData = parseInt((event.gamma||0))   // alpha  //gamma
-				let topData = parseInt((event.beta||0))
-				this.beta = topData
-				this.gamma = leftData
- 
-                if(Math.abs(leftData - this.start_ealpha) > 50 ){
+				var leftData = parseInt(event.gamma || 0); // alpha  //gamma
+				var topData = parseInt(event.beta || 0);
+				this.beta = topData;
+				this.gamma = leftData;
+
+				if (Math.abs(leftData - this.start_ealpha) > 50) {
 					// console.log(leftData , this.start_ealpha)
-					this.isOk = false
+					this.isOk = false;
 					// console.log('false', this.start_ealpha)
 					// this.jlu = this.start_ealpha  // 边界值的前数据
 					// 87 89 90 -89 -88  -87
 					//-87 -88 -89 90 89 87
-					
 				}
-				if(!this.isOk){
+				if (!this.isOk) {
 					// 7.10 start
-					console.log(1111)
-			        if(leftData >= -89 && leftData < 0){      // 2    4    6
-						leftData = leftData + 180 - ((90+leftData)*2)  // 91  92 93
-					}else if(leftData <= 90 && leftData > 0){// 89  88 87 
-						leftData = leftData - 180 + ((90-leftData)*2)             
-					}else if(leftData == 0 || leftData == 30 || leftData == -30){                    
-						this.isOk = true
-						console.log("ok") 
+					console.log(1111);
+					if (leftData >= -89 && leftData < 0) {
+						// 2    4    6
+						leftData = leftData + 180 - (90 + leftData) * 2; // 91  92 93
+					} else if (leftData <= 90 && leftData > 0) {
+						// 89  88 87 
+						leftData = leftData - 180 + (90 - leftData) * 2;
+					} else if (leftData == 0 || leftData == 30 || leftData == -30) {
+						this.isOk = true;
+						console.log("ok");
 					}
 					// if(topData > 0 && topData < 130  ){
 					// 	// this.egammaData =parseInt( -leftData * this.span_w );
@@ -3782,11 +3781,11 @@ var app = new Vue({
 
 					// 	this.ebetaData =parseInt( -topData * this.span_h + 50 );
 					// }	
-                    //7.10 end 
-					
+					//7.10 end 
+
 					// if(this.jlu > 88 && this.jlu > 0){  // 左边开始翻
 					// 	if(leftData - this.start_ealpha > 0 ){   // 左顺时针 
-							
+
 					// 		this.egammaData = -(90*this.span_w - (90 + leftData)*this.span_w)
 					// 		console.log("左顺时针")
 					// 		if(leftData == 0) {
@@ -3819,26 +3818,26 @@ var app = new Vue({
 					// 		}
 					// 	}
 					// }
-				}else{
-					console.log(222)
-					if(topData > 0 && topData < 130 &&  leftData > -25 && leftData < 25 ){
-						this.egammaData =parseInt( -leftData * this.span_w );
-						this.ebetaData =parseInt( -topData * this.span_h +90 );
-					}			
+				} else {
+					console.log(222);
+					if (topData > 0 && topData < 130 && leftData > -25 && leftData < 25) {
+						this.egammaData = parseInt(-leftData * this.span_w);
+						this.ebetaData = parseInt(-topData * this.span_h + 90);
+					}
 				}
-			    
-				this.start_ealpha =leftData
-				this.start_ebeta = topData
+
+				this.start_ealpha = leftData;
+				this.start_ebeta = topData;
 
 				// console.log('left',this.target_core.x - (this.aimData.coreX + Math.ceil(this.egammaData)), 'top',this.target_core.y - (this.aimData.coreY + Math.ceil(this.ebetaData)))
-				
-				let distanceX = this.target_core.x - (this.aimData.coreX + Math.ceil(this.egammaData)),
-					distanceY = this.target_core.y - (this.aimData.coreY + Math.ceil(this.ebetaData))
-					if(distanceX < 10 && distanceY < 10){
-						this.aimData.effect = true
-					}else {
-						this.aimData.effect = false
-					}
+
+				var distanceX = this.target_core.x - (this.aimData.coreX + Math.ceil(this.egammaData)),
+				    distanceY = this.target_core.y - (this.aimData.coreY + Math.ceil(this.ebetaData));
+				if (distanceX < 10 && distanceY < 10) {
+					this.aimData.effect = true;
+				} else {
+					this.aimData.effect = false;
+				}
 				// if(this.target_core.x > this.aimData.coreX){
 				// 	console.log(this.target_core.x - )
 				// }
@@ -3851,6 +3850,7 @@ var app = new Vue({
 			if (this.aimData.effect) {
 				//瞄准了 伤害 30 - 60   
 				this.monsterData.blood -= 60; // 血量减少60
+				console.log(this.monsterData.blood);
 			}
 		},
 
