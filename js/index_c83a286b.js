@@ -3748,9 +3748,9 @@ var app = new Vue({
 			}
 		},
 		onDeviceOrientationChangeEvent: function onDeviceOrientationChangeEvent(event) {
-			// console.log(event)
-
-			if (!this.isTouch) {
+      // console.log(event)
+      this.update(-Math.ceil(event.gamma || 0), -Math.ceil(event.beta || 0))
+			if (this.isTouch) {
 				// 正常  89 - 0 -  -89
 				// let isok = true
 				var leftData = Math.ceil(event.gamma || 0); // alpha  //gamma
@@ -3764,7 +3764,6 @@ var app = new Vue({
     	this.ebetaData = -topData * this.span_h
      }
      */
-
 				if (Math.abs(leftData - this.start_ealpha) > 50) {
 					// console.log(leftData , this.start_ealpha)
 					this.isOk = false;
@@ -3945,7 +3944,8 @@ var app = new Vue({
 			cv = Math.round(cv);
 
 			// t.style.webkitTransform = "translate(" + ch + "px," + cv + "px)";
-			console.log(ch, cv);
+      this.egammaData = ch
+			this.ebetaData = cv	
 		},
 		countDown: function countDown(time) {
 			var date = new Date();
